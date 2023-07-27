@@ -1,0 +1,41 @@
+name: 'Deploy with Diginext'
+description: 'Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters.'
+inputs:
+  dx_key:
+    description: 'Diginext API Access Token'
+    required: true
+  cluster:
+    description: 'Slug of Diginext cluster or any registered Kubernetes clusters on Diginext'
+    required: true
+  registry:
+    description: 'Slug of Diginext container registry or any registered Kubernetes container registries on Diginext'
+    required: true
+  port:
+    description: 'Port to expose the app'
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "lts/*"
+    
+    - run: npm i @topgroup/diginext --location=global
+      shell: bash
+    
+    - run: dx -v
+      shell: bash
+    
+    - run: dx up --token="${{ inputs.dx_key }}" --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
+      shell: bash
+    
+    # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+    #   id: random-number-generator
+    #   shell: bash
+    # - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+    #   shell: bash
+    # - run: goodbye.sh
+    #   shell: bash
