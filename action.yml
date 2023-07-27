@@ -1,5 +1,6 @@
 name: 'Deploy with Diginext'
 description: 'Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters.'
+
 inputs:
   dx_key:
     description: 'Diginext API Access Token'
@@ -13,10 +14,12 @@ inputs:
   port:
     description: 'Port to expose the app'
     default: "3000"
+
 # outputs:
 #   random-number:
 #     description: "Random number"
 #     value: ${{ steps.random-number-generator.outputs.random-number }}
+
 runs:
   using: "composite"
   steps:
@@ -29,14 +32,19 @@ runs:
     
     - run: dx -v
       shell: bash
+
+    - run: dx login https://hobby.diginext.site --token="${{ inputs.dx_key }}"
+      shell: bash
     
-    - run: dx up --token="${{ inputs.dx_key }}" --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
+    - run: dx up --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
       shell: bash
     
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
     #   id: random-number-generator
     #   shell: bash
+
     # - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
     #   shell: bash
+
     # - run: goodbye.sh
     #   shell: bash
