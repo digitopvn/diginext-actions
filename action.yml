@@ -12,6 +12,7 @@ inputs:
     required: true
   port:
     description: 'Port to expose the app'
+    default: "3000"
 # outputs:
 #   random-number:
 #     description: "Random number"
