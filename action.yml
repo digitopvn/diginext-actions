@@ -2,9 +2,11 @@ name: 'Deploy with Diginext'
 description: 'Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters.'
 
 inputs:
-  dx_key:
-    description: 'Diginext API Access Token'
+  dx_api_key:
+    description: 'Diginext API Access Token (key)'
     required: true
+  dx_access_token:
+    description: 'Diginext User Access Token'
   cluster:
     description: 'Slug of Diginext cluster or any registered Kubernetes clusters on Diginext'
     required: true
@@ -33,7 +35,7 @@ runs:
     - run: dx -v
       shell: bash
 
-    - run: dx login https://hobby.diginext.site --token="${{ inputs.dx_key }}"
+    - run: dx login https://hobby.diginext.site --api-token="${{ inputs.dx_api_key }}"
       shell: bash
     
     - run: dx up --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
