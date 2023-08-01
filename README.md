@@ -4,8 +4,6 @@ Run Github Actions to deploy apps to Diginext platform or any Kubernetes cluster
 
 ## Inputs
 
-## Inputs
-
 | Name            | Required | Description                                                                                      |
 |:---------------:|:--------:|:------------------------------------------------------------------------------------------------:|
 | `api_key`       | `true`   | Specify the API access token to authenticate with Diginext platform.                             |
