@@ -13,6 +13,8 @@ Run Github Actions to deploy apps to Diginext platform or any Kubernetes cluster
 | `workspace_url` | `false`  | Custom workspace URL (eg. self-hosted workspace), default is `https://hobby.diginext.site`.      |
 | `deploy_env`    | `false`  | Specify the deploy environment, default is `dev`.                                                |
 | `port`          | `false`  | Port to expose the app, default is `3000`.                                                       |
+| `debug`         | `false`  | Enable DEBUG mode (Caution: sensitive data could be exposed during debug mude), default: `false`.|
+| `detach`        | `false`  | Run deploy command in detach mode, default is `false`.                                           |
 
 ## Usage
 
