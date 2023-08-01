@@ -39,7 +39,7 @@ runs:
       with:
         node-version: "lts/*"
 
-    - run: npm i @topgroup/diginext@{{ inputs.dx_version }} --location=global
+    - run: npm i @topgroup/diginext@${{ inputs.dx_version }} --location=global
       shell: bash
 
     - run: dx -v
