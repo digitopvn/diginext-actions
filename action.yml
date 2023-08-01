@@ -1,5 +1,5 @@
 name: "Deploy with Diginext"
-description: "Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters."
+description: "Run actions to deploy apps to Diginext platform or any Kubernetes clusters."
 
 inputs:
   api_key:
@@ -11,6 +11,9 @@ inputs:
   workspace_url:
     description: "Custom URL (eg. Self-hosted workspace)"
     default: https://hobby.diginext.site
+  project:
+    description: "Slug of Diginext project"
+    default: ''
   cluster:
     description: "Slug of Diginext cluster or any registered Kubernetes clusters on Diginext"
     required: true
@@ -41,6 +44,14 @@ runs:
 
     - run: dx login ${{ inputs.workspace_url }} --api-token="${{ inputs.api_key }}"
       shell: bash
+
+    # - if: "${{ inputs.project != '' }}"
+    #   run: dx up --project=${{ inputs.project }} --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
+    #   shell: bash
+
+    # - if: "${{ inputs.project == '' }}"
+    #   run: dx up --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
+    #   shell: bash
 
     - run: dx up --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
       shell: bash
