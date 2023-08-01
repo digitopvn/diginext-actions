@@ -1,20 +1,24 @@
-name: 'Deploy with Diginext'
-description: 'Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters.'
+name: "Deploy with Diginext"
+description: "Run actions for Diginext to deploy on Diginext platform or Kubernetes clusters."
 
 inputs:
-  dx_api_key:
-    description: 'Diginext API Access Token (key)'
+  api_key:
+    description: "Diginext API Access Token (key)"
     required: true
-  dx_access_token:
-    description: 'Diginext User Access Token'
+  deploy_env:
+    description: "Target deploy environment"
+    default: dev
+  workspace_url:
+    description: "Custom URL (eg. Self-hosted workspace)"
+    default: https://hobby.diginext.site
   cluster:
-    description: 'Slug of Diginext cluster or any registered Kubernetes clusters on Diginext'
+    description: "Slug of Diginext cluster or any registered Kubernetes clusters on Diginext"
     required: true
   registry:
-    description: 'Slug of Diginext container registry or any registered Kubernetes container registries on Diginext'
+    description: "Slug of Diginext container registry or any registered Kubernetes container registries on Diginext"
     required: true
   port:
-    description: 'Port to expose the app'
+    description: "Port to expose the app"
     default: "3000"
 
 # outputs:
@@ -28,19 +32,19 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: "lts/*"
-    
+
     - run: npm i @topgroup/diginext --location=global
       shell: bash
-    
+
     - run: dx -v
       shell: bash
 
-    - run: dx login https://hobby.diginext.site --api-token="${{ inputs.dx_api_key }}"
+    - run: dx login ${{ inputs.workspace_url }} --api-token="${{ inputs.api_key }}"
       shell: bash
-    
-    - run: dx up --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
+
+    - run: dx up --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
       shell: bash
-    
+
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
     #   id: random-number-generator
     #   shell: bash
