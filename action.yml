@@ -2,6 +2,9 @@ name: "Deploy with Diginext"
 description: "Run actions to deploy apps to Diginext platform or any Kubernetes clusters."
 
 inputs:
+  dx_version:
+    description: "Specific version of Diginext CLI"
+    default: latest
   api_key:
     description: "Diginext API Access Token (key)"
     required: true
@@ -36,13 +39,16 @@ runs:
       with:
         node-version: "lts/*"
 
-    - run: npm i @topgroup/diginext --location=global
+    - run: npm i @topgroup/diginext@{{ inputs.dx_version }} --location=global
       shell: bash
 
     - run: dx -v
       shell: bash
 
     - run: dx login ${{ inputs.workspace_url }} --api-token="${{ inputs.api_key }}"
+      shell: bash
+
+    - run: dx info
       shell: bash
 
     # - if: "${{ inputs.project != '' }}"
