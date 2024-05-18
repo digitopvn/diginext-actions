@@ -93,7 +93,10 @@ runs:
         echo "[GITHUB_ACTION] DEBUG: ${{ inputs.debug }}"
         echo "[GITHUB_ACTION] ROLL_OUT: ${{ inputs.roll_out }}"
 
-        dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag} ${rollout_flag} --ssl --domain --tail
+        FLAGS="--api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag}${rollout_flag} --ssl --domain --tail"
+        echo "dx up $FLAGS"
+
+        dx up $FLAGS
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
