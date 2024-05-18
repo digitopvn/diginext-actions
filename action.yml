@@ -69,19 +69,19 @@ runs:
     #   shell: bash
 
     - run: |
-        if [ -n "${inputs.debug}" ]; then
+        if [ -n "${GITHUB_INPUT_DEBUG}" ] && [ ! -z "${GITHUB_INPUT_DEBUG}" ]; then
           debug_flag="--debug"
         else
           debug_flag=""
         fi
 
-        if [ -n "${inputs.roll_out}" ]; then
+        if [ -n "${GITHUB_INPUT_ROLL_OUT}" ] && [ ! -z "${GITHUB_INPUT_ROLL_OUT}" ]; then
           rollout_flag="--rollout"
         else
           rollout_flag=""
         fi
 
-        dx up --api-token="${inputs.api_key}" --env=${inputs.deploy_env} --cluster="${inputs.cluster}" --registry="${inputs.registry}" --port=${inputs.port} --ssl --domain --tail ${debug_flag} ${rollout_flag}
+        dx up --api-token="${GITHUB_INPUT_API_KEY}" --env=${GITHUB_INPUT_DEPLOY_ENV} --cluster="${GITHUB_INPUT_CLUSTER}" --registry="${GITHUB_INPUT_REGISTRY}" --port=${GITHUB_INPUT_PORT} --ssl --domain --tail ${debug_flag} ${rollout_flag}
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
