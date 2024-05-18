@@ -69,19 +69,31 @@ runs:
     #   shell: bash
 
     - run: |
-        if [ -n "${GITHUB_INPUT_DEBUG}" ] && [ ! -z "${GITHUB_INPUT_DEBUG}" ]; then
+        if [ -n "${{ inputs.debug }}" ] && [ ! -z "${{ inputs.debug }}" ]; then
           debug_flag="--debug"
         else
           debug_flag=""
         fi
 
-        if [ -n "${GITHUB_INPUT_ROLL_OUT}" ] && [ ! -z "${GITHUB_INPUT_ROLL_OUT}" ]; then
+        if [ -n "${{ inputs.roll_out }}" ] && [ ! -z "${{ inputs.roll_out }}" ]; then
           rollout_flag="--rollout"
         else
           rollout_flag=""
         fi
 
-        dx up --api-token="${GITHUB_INPUT_API_KEY}" --env=${GITHUB_INPUT_DEPLOY_ENV} --cluster="${GITHUB_INPUT_CLUSTER}" --registry="${GITHUB_INPUT_REGISTRY}" --port=${GITHUB_INPUT_PORT} --ssl --domain --tail ${debug_flag} ${rollout_flag}
+        echo "[GITHUB_ACTION] API_KEY: ${{ inputs.api_key }}"
+        echo "[GITHUB_ACTION] DEPLOY_ENV: ${{ inputs.deploy_env }}"
+        echo "[GITHUB_ACTION] CLUSTER: ${{ inputs.cluster }}"
+        echo "[GITHUB_ACTION] REGISTRY: ${{ inputs.registry }}"
+        echo "[GITHUB_ACTION] PORT: ${{ inputs.port }}"
+        echo "[GITHUB_ACTION] SSL: ${{ inputs.ssl }}"
+        echo "[GITHUB_ACTION] DOMAIN: ${{ inputs.domain }}"
+        echo "[GITHUB_ACTION] PROJECT: ${{ inputs.project }}"
+        echo "[GITHUB_ACTION] WORKSPACE_URL: ${{ inputs.workspace_url }}"
+        echo "[GITHUB_ACTION] DEBUG: ${{ inputs.debug }}"
+        echo "[GITHUB_ACTION] ROLL_OUT: ${{ inputs.roll_out }}"
+
+        dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail ${debug_flag} ${rollout_flag}
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
