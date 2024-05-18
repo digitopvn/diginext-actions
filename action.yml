@@ -70,13 +70,13 @@ runs:
 
     - run: |
         if [ -n "${{ inputs.debug }}" ] && [ ! -z "${{ inputs.debug }}" ]; then
-          debug_flag="--debug"
+          debug_flag=" --debug"
         else
           debug_flag=""
         fi
 
         if [ -n "${{ inputs.roll_out }}" ] && [ ! -z "${{ inputs.roll_out }}" ]; then
-          rollout_flag="--rollout"
+          rollout_flag=" --rollout"
         else
           rollout_flag=""
         fi
@@ -93,7 +93,7 @@ runs:
         echo "[GITHUB_ACTION] DEBUG: ${{ inputs.debug }}"
         echo "[GITHUB_ACTION] ROLL_OUT: ${{ inputs.roll_out }}"
 
-        dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail ${debug_flag} ${rollout_flag}
+        dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag} ${rollout_flag} --ssl --domain --tail
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
