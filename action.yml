@@ -13,7 +13,7 @@ inputs:
     default: dev
   workspace_url:
     description: "Custom URL (eg. Self-hosted workspace)"
-    default: https://hobby.diginext.site
+    default: https://app.dxup.dev
   project:
     description: "Slug of Diginext project"
     default: ""

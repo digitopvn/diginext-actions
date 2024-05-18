@@ -4,17 +4,17 @@ Run Github Actions to deploy apps to Diginext platform or any Kubernetes cluster
 
 ## Inputs
 
-| Name            | Required | Description                                                                                      |
-|:---------------:|:--------:|:------------------------------------------------------------------------------------------------:|
-| `api_key`       | `true`   | Specify the API access token to authenticate with Diginext platform.                             |
-| `cluster`       | `true`   | Specify the slug of targeted cluster to deploy.                                                  |
-| `registry`      | `true`   | Specify the slug of container registry to store the container image.                             |
-| `dx_version`    | `false`  | Default is `latest`.                                                                             |
-| `workspace_url` | `false`  | Custom workspace URL (eg. self-hosted workspace), default is `https://hobby.diginext.site`.      |
-| `deploy_env`    | `false`  | Specify the deploy environment, default is `dev`.                                                |
-| `port`          | `false`  | Port to expose the app, default is `3000`.                                                       |
-| `debug`         | `false`  | Enable DEBUG mode (Caution: sensitive data could be exposed during debug mude), default: `false`.|
-| `detach`        | `false`  | Run deploy command in detach mode, default is `false`.                                           |
+|      Name       | Required |                                            Description                                            |
+| :-------------: | :------: | :-----------------------------------------------------------------------------------------------: |
+|    `api_key`    |  `true`  |               Specify the API access token to authenticate with Diginext platform.                |
+|    `cluster`    |  `true`  |                          Specify the slug of targeted cluster to deploy.                          |
+|   `registry`    |  `true`  |               Specify the slug of container registry to store the container image.                |
+|  `dx_version`   | `false`  |                                       Default is `latest`.                                        |
+| `workspace_url` | `false`  |       Custom workspace URL (eg. self-hosted workspace), default is `https://app.dxup.dev`.        |
+|  `deploy_env`   | `false`  |                         Specify the deploy environment, default is `dev`.                         |
+|     `port`      | `false`  |                            Port to expose the app, default is `3000`.                             |
+|     `debug`     | `false`  | Enable DEBUG mode (Caution: sensitive data could be exposed during debug mude), default: `false`. |
+|    `detach`     | `false`  |                      Run deploy command in detach mode, default is `false`.                       |
 
 ## Usage
 
