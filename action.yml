@@ -32,6 +32,9 @@ inputs:
   detach:
     description: "Run deploy command in detach mode (will not wait for deploy process to finish)"
     default: ""
+  roll_out:
+    description: "When deploy to `prod` it will skip `prerelelease` environment and roll out, default is `false`."
+    default: ""
 
 # outputs:
 #   random-number:
@@ -65,12 +68,7 @@ runs:
     #   run: dx up --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
     #   shell: bash
 
-    - if: "${{ inputs.debug == '' }}"
-      run: dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
-      shell: bash
-
-    - if: "${{ inputs.debug != '' }}"
-      run: dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail --debug
+    - run: dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail ${IF inputs.debug != '', '--debug', ''} ${IF inputs.roll_out != '', '--rollout', ''}
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
