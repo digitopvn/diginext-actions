@@ -68,7 +68,20 @@ runs:
     #   run: dx up --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail
     #   shell: bash
 
-    - run: dx up --api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }} --ssl --domain --tail ${IF inputs.debug != '', '--debug', ''} ${IF inputs.roll_out != '', '--rollout', ''}
+    - run: |
+        if [ -n "${inputs.debug}" ]; then
+          debug_flag="--debug"
+        else
+          debug_flag=""
+        fi
+
+        if [ -n "${inputs.roll_out}" ]; then
+          rollout_flag="--rollout"
+        else
+          rollout_flag=""
+        fi
+
+        dx up --api-token="${inputs.api_key}" --env=${inputs.deploy_env} --cluster="${inputs.cluster}" --registry="${inputs.registry}" --port=${inputs.port} --ssl --domain --tail ${debug_flag} ${rollout_flag}
       shell: bash
 
     # - run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
