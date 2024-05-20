@@ -81,6 +81,12 @@ runs:
           rollout_flag=""
         fi
 
+        if [ -n "${{ inputs.detach }}" ] && [ ! -z "${{ inputs.detach }}" ]; then
+          tail_flag=" --tail"
+        else
+          tail_flag=""
+        fi
+
         echo "[GITHUB_ACTION] API_KEY: ${{ inputs.api_key }}"
         echo "[GITHUB_ACTION] DEPLOY_ENV: ${{ inputs.deploy_env }}"
         echo "[GITHUB_ACTION] CLUSTER: ${{ inputs.cluster }}"
@@ -91,9 +97,10 @@ runs:
         echo "[GITHUB_ACTION] PROJECT: ${{ inputs.project }}"
         echo "[GITHUB_ACTION] WORKSPACE_URL: ${{ inputs.workspace_url }}"
         echo "[GITHUB_ACTION] DEBUG: ${{ inputs.debug }}"
+        echo "[GITHUB_ACTION] DETACH: ${{ inputs.detach }}"
         echo "[GITHUB_ACTION] ROLL_OUT: ${{ inputs.roll_out }}"
 
-        FLAGS="--api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag}${rollout_flag} --ssl --domain --tail"
+        FLAGS="--api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag}${rollout_flag} --ssl --domain${tail_flag}"
         echo "dx up $FLAGS"
 
         dx up $FLAGS
