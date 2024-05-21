@@ -29,8 +29,8 @@ inputs:
   debug:
     description: "Toggle DEBUG mode (Caution: sensitive information could be exposed during debug mude)"
     default: ""
-  detach:
-    description: "Run deploy command in detach mode (will not wait for deploy process to finish)"
+  tail:
+    description: "Display deployment logs until finished"
     default: ""
   roll_out:
     description: "When deploy to `prod` it will skip `prerelelease` environment and roll out, default is `false`."
@@ -81,7 +81,7 @@ runs:
           rollout_flag=""
         fi
 
-        if [ -n "${{ inputs.detach }}" ] && [ ! -z "${{ inputs.detach }}" ]; then
+        if [ -n "${{ inputs.tail }}" ] && [ ! -z "${{ inputs.tail }}" ]; then
           tail_flag=" --tail"
         else
           tail_flag=""
@@ -97,7 +97,7 @@ runs:
         echo "[GITHUB_ACTION] PROJECT: ${{ inputs.project }}"
         echo "[GITHUB_ACTION] WORKSPACE_URL: ${{ inputs.workspace_url }}"
         echo "[GITHUB_ACTION] DEBUG: ${{ inputs.debug }}"
-        echo "[GITHUB_ACTION] DETACH: ${{ inputs.detach }}"
+        echo "[GITHUB_ACTION] TAIL: ${{ inputs.tail }}"
         echo "[GITHUB_ACTION] ROLL_OUT: ${{ inputs.roll_out }}"
 
         FLAGS="--api-token="${{ inputs.api_key }}" --env=${{ inputs.deploy_env }} --cluster="${{ inputs.cluster }}" --registry="${{ inputs.registry }}" --port=${{ inputs.port }}${debug_flag}${rollout_flag} --ssl --domain${tail_flag}"
