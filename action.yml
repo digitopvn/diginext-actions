@@ -48,6 +48,14 @@ runs:
       with:
         node-version: "lts/*"
 
+    - name: Cache npm global packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-global-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-global-
+
     - run: npm i @topgroup/diginext@${{ inputs.dx_version }} --location=global
       shell: bash
 
