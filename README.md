@@ -1,6 +1,6 @@
-# diginext-actions
+# dxup-actions
 
-Run Github Actions to deploy apps to Diginext platform or any Kubernetes clusters.
+Run Github Actions to deploy apps to DXUP platform or any Kubernetes clusters.
 
 ## Inputs
 
